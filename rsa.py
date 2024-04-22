@@ -1,5 +1,6 @@
 import random
 from sympy import isprime, gcd
+import os
 
 def text_to_int_blocks(text):
     # Dopełnienie tekstu, aby jego długość była wielokrotnością 8
@@ -59,6 +60,18 @@ def rsa_decrypt(int_blocks, private_key):
     return [pow(block, d, n) for block in int_blocks]
 
 
+# Funkcje rsa_encrypt, rsa_decrypt, text_to_int_blocks, int_blocks_to_text oraz generate_keys
+# powinny być zaimplementowane zgodnie z wcześniejszymi opisami
+
+def save_data_to_file(data, filename):
+    with open(filename, 'w') as file:
+        for value in data:
+            file.write(f"{value}\n")
+
+def load_data_from_file(filename):
+    with open(filename, 'r') as file:
+        return [int(line.strip()) for line in file]
+
 text = "To jest scisle tajna informacja"
 int_blocks = text_to_int_blocks(text)
 print(int_blocks)
@@ -75,3 +88,4 @@ decrypted_blocks = rsa_decrypt(encrypted_blocks, private_key)
 decrypted_text = int_blocks_to_text(decrypted_blocks)
 print("Encrypted:", encrypted_blocks)
 print("Decrypted:", decrypted_text)
+
