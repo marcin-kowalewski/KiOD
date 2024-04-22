@@ -44,7 +44,11 @@ def generate_keys(bit_length=1024):
     n = p * q
     phi = (p - 1) * (q - 1)
     
-    e = 65537  # Często używany publiczny eksponent
+    #e = 65537  # Często używany publiczny eksponent
+    e = random.getrandbits(bit_length // 2)
+    while not isprime(e) and gcd(e, phi) != 1:
+            e = random.getrandbits(bit_length // 2)
+
     # Znajdowanie d, inwersja modularna e mod phi
     d = pow(e, -1, phi)
     
@@ -81,6 +85,8 @@ print(text)
 
 # Przykładowe użycie funkcji
 public_key, private_key = generate_keys()
+print('public_key:', public_key, 'private_key:', private_key)
+
 text = "To jest scisle tajna informacja"
 int_blocks = text_to_int_blocks(text)
 encrypted_blocks = rsa_encrypt(int_blocks, public_key)
